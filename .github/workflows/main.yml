@@ -17,7 +17,7 @@ jobs:
           & {$P = $env:TEMP + '\chromeremotedesktophost.msi'; Invoke-WebRequest 'https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi' -OutFile $P; Start-Process $P -Wait; Remove-Item $P}
           & {$P = $env:TEMP + '\chrome_installer.exe'; Invoke-WebRequest 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile $P; Start-Process -FilePath $P -Args '/install' -Verb RunAs -Wait; Remove-Item $P}
           Start-Sleep -Seconds 3
-          "%PROGRAMFILES(X86)%\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AZEOvhUOpuPIK0LbvGB7YZH90NjOS05X_4ywhNX1eYT_JJ626gBWaCuGOeXOBIUHy6SI7A" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=%ClassicGostoso%
+          & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AZEOvhUOpuPIK0LbvGB7YZH90NjOS05X_4ywhNX1eYT_JJ626gBWaCuGOeXOBIUHy6SI7A" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
       - name: Servidor Iniciado!
         run: |
           $counter = 0
