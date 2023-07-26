@@ -1,0 +1,28 @@
+name: Install AnyDesk and Get AnyDesk ID
+
+on:
+  push:
+    branches:
+      - main  # Defina a branch desejada para acionar o CI
+  workflow_dispatch:  # Isso permite acionar manualmente o CI pelo GitHub
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: DATAVERSE-VPS-SERVER @By ClassicX-O-BRABO
+        run: |
+          Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+          & {$P = $env:TEMP + '\chromeremotedesktophost.msi'; Invoke-WebRequest 'https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi' -OutFile $P; Start-Process $P -Wait; Remove-Item $P}
+          & {$P = $env:TEMP + '\chrome_installer.exe'; Invoke-WebRequest 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile $P; Start-Process -FilePath $P -Args '/install' -Verb RunAs -Wait; Remove-Item $P}
+          Start-Sleep -Seconds 3
+          "%PROGRAMFILES(X86)%\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AZEOvhUOpuPIK0LbvGB7YZH90NjOS05X_4ywhNX1eYT_JJ626gBWaCuGOeXOBIUHy6SI7A" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=%ClassicGostoso%
+      - name: Servidor Iniciado!
+        run: |
+          $counter = 0
+          while ($true) {
+          Write-Output "Server Ligado! $counter"
+          $counter++
+          Start-Sleep -Seconds 1
+          }
